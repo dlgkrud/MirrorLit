@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mirrorlit-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mirrorlit
+  template:
+    metadata:
+      labels:
+        app: mirrorlit
+    spec:
+      containers:
+      - name: mirrorlit
+        # Docker Hub 이미지 이름
+        image: hagyeoung/mirrorlit:latest
+        ports:
+        - containerPort: 3000
+        env:
+        # 환경 변수는 ConfigMap 또는 Secret으로 관리하는 것을 권장합니다
+        - name: PORT
+          value: "3000"
+        - name: NODE_ENV
+          value: "production"
+        imagePullPolicy: Always
+
